@@ -6,8 +6,13 @@ module Web::Controllers::Entries
     expose :sort
 
     def call(params)
-      @entries = EntryRepository.new.most_recent
+
       @sort = params[:sort]
+      if @sort.downcase == 'asc' || @sort.downcase == 'ascending'
+        @entries = EntryRepository.new.least_recent
+      else
+        @entries = EntryRepository.new.most_recent
+      end
     end
   end
 end
